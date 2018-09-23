@@ -25,6 +25,8 @@ public class Cidade implements Serializable {
 	@JoinColumn(name = "estado_id")// defidindo qual vai sser o nome da chave estrangeira
 	private Estado estado;
 	
+
+	
 	public Cidade() {
 		
 	}

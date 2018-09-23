@@ -38,8 +38,11 @@ public class Cliente implements Serializable {
 	private List<Endereco> enderecos = new ArrayList<>();
 	
 	@ElementCollection
-	@CollectionTable(name="TELEFONE")
+	@CollectionTable(name="TELEFONE")//criando uma tabela idependente no banco com o cliente_id
 	private Set<String> telefones = new HashSet<>();//motivo de usar o set é que ele não aceita repetição sendo assim perfeito para numero de cliente
+	
+	@OneToMany(mappedBy="cliente")//mapeado do outro lado pelo cliente
+	private List<Pedido> pedidos = new ArrayList<>();
 	
 	public Cliente() {
 		
@@ -61,6 +64,14 @@ public class Cliente implements Serializable {
 
 	public void setId(Integer id) {
 		this.id = id;
+	}
+
+	public List<Pedido> getPedidos() {
+		return pedidos;
+	}
+
+	public void setPedidos(List<Pedido> pedidos) {
+		this.pedidos = pedidos;
 	}
 
 	public String getNome() {
