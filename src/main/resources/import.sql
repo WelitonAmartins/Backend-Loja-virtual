@@ -10,6 +10,13 @@ insert into PRODUTO_CATEGORIA(produto_id,categoria_id)values(2,1);
 insert into PRODUTO_CATEGORIA(produto_id,categoria_id)values(2,2);
 insert into PRODUTO_CATEGORIA(produto_id,categoria_id)values(3,1);
 
+insert into estado(nome,)values('Minas Gerais');
+insert into estado(nome,)values('Sao Paulo');
 
+
+
+insert into cidade(nome,estado_id)values('Sao Paulo',2);
+insert into cidade(nome,estado_id)values('Campinas',2);
+insert into cidade(nome,estado_id)values('Uberlândia',1);
 
 

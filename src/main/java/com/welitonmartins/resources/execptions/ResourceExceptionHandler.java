@@ -19,7 +19,7 @@ public class ResourceExceptionHandler {
 	
 	@ExceptionHandler(ObjectNotFoundException.class)// aqui indica que é um tratador de exceção desse tipo de exceção ObjectNotFoundException
 	public ResponseEntity<StandardError> objectNotFound(ObjectNotFoundException e, HttpServletRequest request){
-		StandardError erro = new StandardError(HttpStatus.NOT_FOUND.value(), e.getMessage(), System.currentTimeMillis());//System.currentTimeMillis pega a hora atual
+		StandardError erro = new StandardError(HttpStatus.NOT_FOUND.value(), e.getMessage(), System.currentTimeMillis());//System.currentTimeMillis pega a hora atual em milesegundo
 //linha a cima, instanciando a classes StandardError e passando seus valores(status, msg, e hora)
 		
 		return ResponseEntity.status(HttpStatus.NOT_FOUND).body(erro);
