@@ -38,4 +38,8 @@ insert into PAGAMENTO_COM_CARTAO (numeros_de_parcelas,pedido_id)values(6, 1);
 insert into pagamento(pedido_id, estado)values(1, 2);
 insert into pagamento(pedido_id, estado)values(2, 1);
 
+insert into ITEM_PEDIDO(desconto,preco,quantidade,pedido_id,produto_id)values(0.00, 1, 2000.00, 1, 1);
+insert into ITEM_PEDIDO(desconto,preco,quantidade,pedido_id,produto_id)values(0.00, 2, 80.00, 1, 3);
+insert into ITEM_PEDIDO(desconto,preco,quantidade,pedido_id,produto_id)values(100.00, 1, 800.00, 2, 2);
+
 
