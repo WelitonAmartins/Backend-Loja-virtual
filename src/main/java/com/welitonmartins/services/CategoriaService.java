@@ -3,10 +3,12 @@ package com.welitonmartins.services;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.stereotype.Service;
 
 import com.welitonmartins.model.Categoria;
 import com.welitonmartins.repositories.CategoriaRepository;
+import com.welitonmartins.services.exceptions.DataIntegrityException;
 import com.welitonmartins.services.exceptions.ObjectNotFoundException;
 
 
@@ -34,6 +36,16 @@ public class CategoriaService {
 	public Categoria update(Categoria obj) {
 		find(obj.getId());
 		return cr.save(obj);
+	}
+	//metado para deletar categoria
+	public void delete(Integer id) {
+		try {
+		cr.deleteById(id);
+		}
+		//caso 
+		catch (DataIntegrityViolationException e) {
+			throw new DataIntegrityException("Não é possivel excluir uma categoria que possui produtos");
+		}
 	}
 	
 	

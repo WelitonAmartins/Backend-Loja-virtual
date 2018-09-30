@@ -7,6 +7,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 
+import com.welitonmartins.services.exceptions.DataIntegrityException;
 import com.welitonmartins.services.exceptions.ObjectNotFoundException;
 
 /*
@@ -24,5 +25,13 @@ public class ResourceExceptionHandler {
 		
 		return ResponseEntity.status(HttpStatus.NOT_FOUND).body(erro);
 	}
-
+	
+	@ExceptionHandler(DataIntegrityException.class)// aqui indica que é um tratador de exceção desse tipo de exceção ObjectNotFoundException
+	public ResponseEntity<StandardError> dataIntegrity(DataIntegrityException e, HttpServletRequest request){
+		
+		StandardError erro = new StandardError(HttpStatus.BAD_REQUEST.value(), e.getMessage(), System.currentTimeMillis());//System.currentTimeMillis pega a hora atual em milesegundo
+//linha a cima, instanciando a classes StandardError e passando seus valores(status, msg, e hora)
+		
+		return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(erro);
+	}
 }
