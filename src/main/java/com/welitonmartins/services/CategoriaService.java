@@ -5,6 +5,9 @@ import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataIntegrityViolationException;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Sort.Direction;
 import org.springframework.stereotype.Service;
 
 import com.welitonmartins.model.Categoria;
@@ -48,9 +51,16 @@ public class CategoriaService {
 			throw new DataIntegrityException("Não é possivel excluir uma categoria que possui produtos");
 		}
 	}
-	
+	//metado para retorna todas as categorias
 	public List<Categoria>findAll(){
 			return cr.findAll();
+	}
+	//metado de paginação
+	//class do spring Page captura e encapsula informaçoes e operaçoes sobre a paginação
+	public Page<Categoria> findPage(Integer page, Integer linesPerPage, String orderBy, String direction){
+			//parametros em cima - contagem de pagina,quantas linha por pagina eu qero, por qual atributo que vou ordenar, e direção se é acendente ou descente
+		PageRequest pageRequest = PageRequest.of(page, linesPerPage, Direction.valueOf(direction), orderBy);
+		return cr.findAll(pageRequest);
 	}
 	
 }

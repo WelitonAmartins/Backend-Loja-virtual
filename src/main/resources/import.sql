@@ -1,5 +1,11 @@
 insert into categoria(nome)values('escritorio');
 insert into categoria(nome)values('informatica');
+insert into categoria(nome)values('Cama mesa e banho');
+insert into categoria(nome)values('Eletronicos');
+insert into categoria(nome)values('Jardinagem');
+insert into categoria(nome)values('Decoração');
+insert into categoria(nome)values('Perfumaria');
+
 
 insert into produto(nome,preco)values('computador', 2000.00);
 insert into produto(nome,preco)values('Impressora', 800.00);
