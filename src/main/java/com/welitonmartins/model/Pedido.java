@@ -28,6 +28,7 @@ public class Pedido implements Serializable {
 	@OneToOne(cascade = CascadeType.ALL, mappedBy="pedido")//mapeando 1 para um, necessario usar com o jpa cascade = CascadeType.ALL,
 	private Pagamento pagamento;
 	
+	
 	@ManyToOne
 	@JoinColumn(name="cliente_id")
 	private Cliente cliente;

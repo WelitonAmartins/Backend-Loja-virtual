@@ -31,9 +31,7 @@ insert into ENDERECO (bairro,cep,complemento,logradouro,numero,cidade_id,cliente
 insert into PEDIDO (instante,cliente_id,endereco_de_entrega_id)values('2018-02-18',1 ,1);
 insert into PEDIDO (instante,cliente_id,endereco_de_entrega_id)values('2018-05-08',1 ,2);
 
-insert into PAGAMENTO_COM_BOLETO (DATA_PAGAMENTO, DATA_VENCIMENTO, PEDIDO_ID)values('2018-01-21 00:00:00','2018-06-20 00:00:00',2);
 
-insert into PAGAMENTO_COM_CARTAO (numeros_de_parcelas,pedido_id)values(6, 1);
 
 insert into pagamento(pedido_id, estado)values(1, 2);
 insert into pagamento(pedido_id, estado)values(2, 1);

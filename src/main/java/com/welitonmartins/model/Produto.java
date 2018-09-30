@@ -15,7 +15,7 @@ import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
 import javax.persistence.OneToMany;
 
-import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 
 @Entity
 public class Produto implements Serializable {
@@ -28,7 +28,8 @@ public class Produto implements Serializable {
 	private String nome;
 	private Double preco;
 	
-	@JsonBackReference//serializacao informando o outro lado onde vai ser a busca, desse lado nao busca, assim eveita a serializacao
+	//@JsonBackReference//serializacao informando o outro lado onde vai ser a busca, desse lado nao busca, assim eveita a serializacao
+	@JsonIgnore
 	@ManyToMany
 	@JoinTable(name = "PRODUTO_CATEGORIA", //aqui define o nome da table no banco das chave estrangeira entre prudoto e categoria
 				joinColumns = @JoinColumn(name= "produto_id"),// aqui define a chave estrangeira de produto
@@ -36,8 +37,8 @@ public class Produto implements Serializable {
 	)
 	private List<Categoria> categoria = new ArrayList<>();
 	
-	//mapeando o outro lado que pega o id de ItemPedidoPk a class auxilar
-	@OneToMany(mappedBy="id.produto")
+	@JsonIgnore
+	@OneToMany(mappedBy="id.produto")//mapeando o outro lado que pega o id de ItemPedidoPk a class auxilar
 	private Set<ItemPedido> itens = new HashSet<>();
 	
 	public Produto() {
@@ -51,8 +52,8 @@ public class Produto implements Serializable {
 		this.preco = preco;
 	}
 	
-//esse metado faz a varedura de pedidos, onde o produto conhece os seus pedidos
-	public List<Pedido> getPedidos(){
+	@JsonIgnore
+	public List<Pedido> getPedidos(){//esse metado faz a varedura de pedidos, onde o produto conhece os seus pedidos
 		List<Pedido>lista = new ArrayList<>();
 		for(ItemPedido x : itens) {
 			lista.add(x.getPedido());

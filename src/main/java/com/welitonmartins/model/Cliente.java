@@ -15,7 +15,7 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.OneToMany;
 
-import com.fasterxml.jackson.annotation.JsonManagedReference;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.welitonmartins.model.enums.TipoCliente;
 
 @Entity
@@ -33,7 +33,7 @@ public class Cliente implements Serializable {
 	private String cpfOuCnpj;
 	private Integer tipo;
 	
-	@JsonManagedReference
+	//@JsonManagedReference
 	@OneToMany(mappedBy="cliente")
 	private List<Endereco> enderecos = new ArrayList<>();
 	
@@ -41,6 +41,7 @@ public class Cliente implements Serializable {
 	@CollectionTable(name="TELEFONE")//criando uma tabela idependente no banco com o cliente_id
 	private Set<String> telefones = new HashSet<>();//motivo de usar o set é que ele não aceita repetição sendo assim perfeito para numero de cliente
 	
+	@JsonIgnore
 	@OneToMany(mappedBy="cliente")//mapeado do outro lado pelo cliente
 	private List<Pedido> pedidos = new ArrayList<>();
 	
