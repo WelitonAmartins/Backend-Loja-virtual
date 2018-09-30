@@ -20,7 +20,7 @@ public class ClienteResource {
 	
 	//metado que busca a classe de regra de negocio "service" para buscar por id
 	@RequestMapping(value="/{id}",method=RequestMethod.GET)
-	public ResponseEntity<?> find(@PathVariable Integer id) {
+	public ResponseEntity<Cliente> find(@PathVariable Integer id) {
 		Cliente obj = service.find(id);
 		//ResponseEntity tem varias informaçoes do protocolo http
 		//linha abaixo uma forma de falar que aconteceu tudo ok, e tem como corpo o "obj"

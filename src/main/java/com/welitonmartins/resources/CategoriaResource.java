@@ -23,12 +23,14 @@ public class CategoriaResource {
 	private CategoriaService service;
 	
 	//metado que busca a classe de regra de negocio "service" para buscar por id
-		@RequestMapping(value="/{id}",method=RequestMethod.GET)	public ResponseEntity<?> find(@PathVariable Integer id) {
+		@RequestMapping(value="/{id}",method=RequestMethod.GET)	
+		public ResponseEntity<Categoria> find(@PathVariable Integer id) {
 		Categoria obj = service.find(id);
 		//ResponseEntity tem varias informaçoes do protocolo http
 		//linha abaixo uma forma de falar que aconteceu tudo ok, e tem como corpo o "obj"
 		return ResponseEntity.ok().body(obj);	
 	}
+		
 		@RequestMapping(method=RequestMethod.POST)
 		public ResponseEntity<Void> insert(@RequestBody Categoria obj){
 			obj = service.insert(obj); 
@@ -37,5 +39,12 @@ public class CategoriaResource {
 					.path("/{id}").buildAndExpand(obj.getId()).toUri();
 			return ResponseEntity.created(uri).build();
 			//created(uri) -> gera o codigo 201
+		}
+		
+		@RequestMapping(value="/{id}", method=RequestMethod.PUT)
+		public ResponseEntity<Void> update(@RequestBody Categoria obj, @PathVariable Integer id){
+			obj.setId(id);//desencargo de conciencia, pra ter certeza que vai receber um id
+			obj = service.update(obj);
+			return ResponseEntity.noContent().build();
 		}
 }

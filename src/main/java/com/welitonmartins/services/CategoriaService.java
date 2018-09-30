@@ -25,8 +25,16 @@ public class CategoriaService {
 		return obj.orElseThrow(() -> new ObjectNotFoundException(
 				"Objeto não encontrado! Id: " + id + ", Tipo: " + Categoria.class.getName()));
 	}
+	//metado para inserir 
 	public Categoria insert(Categoria obj) {
 		obj.setId(null);
 		return cr.save(obj);
 	}
+	//metado para atualizar, o "save" serve tanto para inserir tanto para atualziar
+	public Categoria update(Categoria obj) {
+		find(obj.getId());
+		return cr.save(obj);
+	}
+	
+	
 }
