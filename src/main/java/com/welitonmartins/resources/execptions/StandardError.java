@@ -1,9 +1,13 @@
 package com.welitonmartins.resources.execptions;
+
+import java.io.Serializable;
+
 /*
  * erro padrao
  * essa class vai auxiliar a ResourceExceptionHandler
  */
-public class StandardError {
+public class StandardError implements Serializable{
+	private static final long serialVersionUID = 1L;
 	
 	private Integer status;
 	private String msg;
