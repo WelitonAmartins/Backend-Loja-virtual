@@ -63,7 +63,7 @@ public class CategoriaService {
 		PageRequest pageRequest = PageRequest.of(page, linesPerPage, Direction.valueOf(direction), orderBy);
 		return cr.findAll(pageRequest);
 	}
-	//metado auxilar instacia um objeto a parti do meu objDto
+	//metado auxilar instacia um objeto a parti do meu objDto para o put da categoria
 	public Categoria fromDTO(CategoriaDTO objDto) {
 		return new Categoria(objDto.getId(), objDto.getNome());
 	}
