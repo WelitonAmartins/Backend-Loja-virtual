@@ -9,11 +9,16 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Sort.Direction;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import com.welitonmartins.dto.ClienteDTO;
+import com.welitonmartins.dto.ClienteNewDTO;
+import com.welitonmartins.model.Cidade;
 import com.welitonmartins.model.Cliente;
-import com.welitonmartins.model.Cliente;
+import com.welitonmartins.model.Endereco;
+import com.welitonmartins.model.enums.TipoCliente;
 import com.welitonmartins.repositories.ClienteRepository;
+import com.welitonmartins.repositories.EnderecoRepository;
 import com.welitonmartins.services.exceptions.DataIntegrityException;
 import com.welitonmartins.services.exceptions.ObjectNotFoundException;
 
@@ -25,6 +30,9 @@ public class ClienteService {
 	@Autowired
 	private ClienteRepository clienteRepository;
 	
+	@Autowired
+	private EnderecoRepository enderecoRepository;
+	
 	//metado que busca por id
 	public Cliente find(Integer id) {
 		Optional<Cliente> obj = clienteRepository.findById(id);	
@@ -32,6 +40,14 @@ public class ClienteService {
 		return obj.orElseThrow(() -> new ObjectNotFoundException(
 				"Objeto não encontrado! Id: " + id + ", Tipo: " + Cliente.class.getName()));
 	}
+		@Transactional//essa anotação é para informar que vai ocorrer um transação de preenchimento de endereços para o banco
+		public Cliente insert(Cliente obj) {
+			obj.setId(null);
+			obj = clienteRepository.save(obj);
+			enderecoRepository.saveAll(obj.getEnderecos());
+			return obj;
+		}
+	
 	//metado para atualizar, o "save" serve tanto para inserir tanto para atualziar
 		public Cliente update(Cliente obj) {
 			Cliente newObj = find(obj.getId());
@@ -62,6 +78,22 @@ public class ClienteService {
 		//metado auxilar instacia um objeto a parti do meu objDto, para a atualizacao, put  do cliente
 		public Cliente fromDTO(ClienteDTO objDto) {
 			return new Cliente(objDto.getId(), objDto.getNome(), objDto.getEmail(), null, null);
+		}//cidade cid = new cidade19objDto.getcidadeid(),null,null
+		
+		public Cliente fromDTO(ClienteNewDTO objDto) {													//convertendo o tipoCliente
+			Cliente cli = new Cliente(null, objDto.getNome(), objDto.getEmail(), objDto.getCpfOuCnpj(), TipoCliente.toEnum(objDto.getTipo()));
+			Cidade cid = new Cidade(objDto.getCidadeId(), null, null);
+			Endereco end = new Endereco(null, objDto.getLogradouro(), objDto.getNumero(), objDto.getComplemento(), objDto.getBairro(), objDto.getCep(), cli, cid);
+			cli.getEnderecos().add(end);
+			cli.getTelefones().add(objDto.getTelefone1());//aqui ta passando o telefone obrigatoria que é pelo menos 1
+			//se caso insesrir mais algum telefone ele deixa de ser nulo e entra na excesão abaixo
+			if(objDto.getTelefone2()!= null) {
+				cli.getTelefones().add(objDto.getTelefone2());
+			}
+			if(objDto.getTelefone3()!= null) {
+				cli.getTelefones().add(objDto.getTelefone3());
+			}
+			return cli;
 		}
 		//metado auxilar para o update, PUT, para permitir que autualizar no os campo nome e email
 		private void updateData(Cliente newObj, Cliente obj) {

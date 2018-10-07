@@ -1,6 +1,7 @@
 package com.welitonmartins.resources;
 
 
+import java.net.URI;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -15,8 +16,10 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
 import com.welitonmartins.dto.ClienteDTO;
+import com.welitonmartins.dto.ClienteNewDTO;
 import com.welitonmartins.model.Cliente;
 import com.welitonmartins.services.ClienteService;
 
@@ -27,6 +30,8 @@ public class ClienteResource {
 	@Autowired
 	private ClienteService service;
 	
+
+	
 	//metado que busca a classe de regra de negocio "service" para buscar por id
 	@RequestMapping(value="/{id}",method=RequestMethod.GET)
 	public ResponseEntity<Cliente> find(@PathVariable Integer id) {
@@ -36,6 +41,18 @@ public class ClienteResource {
 		return ResponseEntity.ok().body(obj);
 		
 	}
+	//metado de inserir cliente
+			@RequestMapping(method=RequestMethod.POST)
+			public ResponseEntity<Void> insert(@Valid @RequestBody ClienteNewDTO objDto){
+				Cliente obj = service.fromDTO(objDto);
+				obj = service.insert(obj); 
+				//pegando a requisição uri que vai ser inserida a nova informação
+				URI uri = ServletUriComponentsBuilder.fromCurrentRequest()
+						.path("/{id}").buildAndExpand(obj.getId()).toUri();
+				return ResponseEntity.created(uri).build();
+				//created(uri) -> gera o codigo 201
+			}
+			
 	
 	//metado de atualizar categoria
 			@RequestMapping(value="/{id}", method=RequestMethod.PUT)
