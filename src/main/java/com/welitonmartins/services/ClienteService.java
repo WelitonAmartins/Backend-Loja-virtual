@@ -34,8 +34,9 @@ public class ClienteService {
 	}
 	//metado para atualizar, o "save" serve tanto para inserir tanto para atualziar
 		public Cliente update(Cliente obj) {
-			find(obj.getId());
-			return clienteRepository.save(obj);
+			Cliente newObj = find(obj.getId());
+			updateData(newObj, obj);
+			return clienteRepository.save(newObj);
 		}
 		//metado para deletar categoria
 		public void delete(Integer id) {
@@ -44,7 +45,7 @@ public class ClienteService {
 			}
 			//caso 
 			catch (DataIntegrityViolationException e) {
-				throw new DataIntegrityException("Não é possivel excluir uma categoria que possui produtos");
+				throw new DataIntegrityException("Não é possivel excluir porque há entidades relacionadas");
 			}
 		}
 		//metado para retorna todas as categorias
@@ -61,6 +62,11 @@ public class ClienteService {
 		//metado auxilar instacia um objeto a parti do meu objDto, para a atualizacao, put  do cliente
 		public Cliente fromDTO(ClienteDTO objDto) {
 			return new Cliente(objDto.getId(), objDto.getNome(), objDto.getEmail(), null, null);
+		}
+		//metado auxilar para o update, PUT, para permitir que autualizar no os campo nome e email
+		private void updateData(Cliente newObj, Cliente obj) {
+			newObj.setNome(obj.getNome());
+			newObj.setEmail(obj.getEmail());
 		}
 
 

@@ -12,6 +12,7 @@ import org.springframework.stereotype.Service;
 
 import com.welitonmartins.dto.CategoriaDTO;
 import com.welitonmartins.model.Categoria;
+import com.welitonmartins.model.Cliente;
 import com.welitonmartins.repositories.CategoriaRepository;
 import com.welitonmartins.services.exceptions.DataIntegrityException;
 import com.welitonmartins.services.exceptions.ObjectNotFoundException;
@@ -39,8 +40,9 @@ public class CategoriaService {
 	}
 	//metado para atualizar, o "save" serve tanto para inserir tanto para atualziar
 	public Categoria update(Categoria obj) {
-		find(obj.getId());
-		return cr.save(obj);
+		Categoria newObj = find(obj.getId());
+		updateData(newObj, obj);
+		return cr.save(newObj);
 	}
 	//metado para deletar categoria
 	public void delete(Integer id) {
@@ -67,4 +69,9 @@ public class CategoriaService {
 	public Categoria fromDTO(CategoriaDTO objDto) {
 		return new Categoria(objDto.getId(), objDto.getNome());
 	}
+	//metado auxilar para o update, PUT, para permitir que autualizar no o campo nome 
+	private void updateData(Categoria newObj, Categoria obj) {
+		newObj.setNome(obj.getNome());
+	}
+
 }
