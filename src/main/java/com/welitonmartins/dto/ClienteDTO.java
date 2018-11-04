@@ -8,8 +8,11 @@ import javax.validation.constraints.NotEmpty;
 import org.hibernate.validator.constraints.Length;
 
 import com.welitonmartins.model.Cliente;
+import com.welitonmartins.services.validation.ClienteUpdate;
 
 // classe ClienteDTO vai possuir os dados basico para eu deletar, atulizar e listar 
+
+@ClienteUpdate
 public class ClienteDTO  implements Serializable{
 	private static final long serialVersionUID = 1L;
 	
