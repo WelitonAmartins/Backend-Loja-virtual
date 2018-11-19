@@ -9,12 +9,18 @@ insert into categoria(nome)values('Perfumaria');
 
 insert into produto(nome,preco)values('computador', 2000.00);
 insert into produto(nome,preco)values('Impressora', 800.00);
-insert into produto(nome,preco)values('mouse', 80.00);
+insert into produto(nome,preco)values('mesa de escritorio', 300.00);
+insert into produto(nome,preco)values('toalha', 50.00);
+insert into produto(nome,preco)values('colcha', 200.00);
+insert into produto(nome,preco)values('TV', 1200.00);
+insert into produto(nome,preco)values('shampo', 8.00);
+insert into produto(nome,preco)values('monitor', 180.00);
+insert into produto(nome,preco)values('carregador', 80.00);
+insert into produto(nome,preco)values('celular', 800.00);
 
 insert into PRODUTO_CATEGORIA(produto_id,categoria_id)values(1,1);
 insert into PRODUTO_CATEGORIA(produto_id,categoria_id)values(2,1);
-insert into PRODUTO_CATEGORIA(produto_id,categoria_id)values(2,2);
-insert into PRODUTO_CATEGORIA(produto_id,categoria_id)values(3,1);
+
 
 insert into estado(nome,)values('Minas Gerais');
 insert into estado(nome,)values('Sao Paulo');

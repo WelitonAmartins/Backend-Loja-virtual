@@ -12,7 +12,6 @@ import org.springframework.stereotype.Service;
 
 import com.welitonmartins.dto.CategoriaDTO;
 import com.welitonmartins.model.Categoria;
-import com.welitonmartins.model.Cliente;
 import com.welitonmartins.repositories.CategoriaRepository;
 import com.welitonmartins.services.exceptions.DataIntegrityException;
 import com.welitonmartins.services.exceptions.ObjectNotFoundException;

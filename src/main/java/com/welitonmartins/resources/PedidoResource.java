@@ -11,8 +11,6 @@ import org.springframework.web.bind.annotation.RestController;
 import com.welitonmartins.model.Pedido;
 import com.welitonmartins.services.PedidoService;
 
-import javassist.tools.rmi.ObjectNotFoundException;
-
 @RestController
 @RequestMapping(value="/pedidos")
 public class PedidoResource {
